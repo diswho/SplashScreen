@@ -1,0 +1,8 @@
+expo init SplashScreen
+
+npm install -g expo-cli
+
+expo install expo-splash-screen
+expo install @expo/vector-icons
+
+expo install styled-components
