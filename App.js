@@ -13,7 +13,8 @@ export default function App() {
       try {
         await SplashScreen.preventAutoHideAsync()
         await Font.loadAsync(Entypo.font)
-        // await new Promise(resolve => setTimeout(resolve, 8000))
+        // await new Promise(resolve => setTimeout(resolve, 80))
+        console.log("======== prepare")
       } catch (error) {
         console.warn(error)
       }
@@ -23,21 +24,21 @@ export default function App() {
     }
     prepare()
   }, [])
+
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
       await SplashScreen.hideAsync()
     }
   }, [appIsReady])
+
   if (!appIsReady) {
     return null
   }
+
   return (
-    <>
-      <Dashboard onLayout={onLayoutRootView} />
-    </>
-    // <View onLayout={onLayoutRootView} style={{flex: 1}} >
-    //   <BigText style={{ color: 'red' }}> ======== Hello Friend</BigText>
-    // </View>
+    <View onLayout={onLayoutRootView}>
+      <Dashboard />
+    </View>
   );
 }
 
