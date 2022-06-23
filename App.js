@@ -1,20 +1,32 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import Dashboard from './screens/Dashboard';
-import BigText from './components/BigText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CredentialsContext } from './components/CredentialsContext';
+import RootStack from './navigators/RootStack';
+
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false)
+  const [storedCredentials, setStoredCredentials] = useState("");
+
   useEffect(() => {
     async function prepare() {
       try {
         await SplashScreen.preventAutoHideAsync()
         await Font.loadAsync(Entypo.font)
         // await new Promise(resolve => setTimeout(resolve, 80))
-        console.log("======== prepare")
+        await AsyncStorage.getItem("humanResourceCredentials").then((result) => {
+          if (result !== null) {
+            setStoredCredentials(JSON.parse(result));
+            console.log("======== AsyncStorage.getItem NOT NULL")
+          } else {
+            setStoredCredentials("");
+            // console.log("======== AsyncStorage.getItem IS NULL")
+          }
+        }).catch((err) => console.error(err));
+        // console.log("======== prepare")
       } catch (error) {
         console.warn(error)
       }
@@ -26,19 +38,21 @@ export default function App() {
   }, [])
 
   const onLayoutRootView = useCallback(async () => {
+    // console.log("======== onLayoutRootView")
     if (appIsReady) {
       await SplashScreen.hideAsync()
     }
   }, [appIsReady])
 
   if (!appIsReady) {
+    // console.log("======== appIsReady IS Fail")
     return null
   }
 
   return (
-    <View onLayout={onLayoutRootView}>
-      <Dashboard />
-    </View>
+    <CredentialsContext.Provider value={{ storedCredentials, setStoredCredentials }} >      
+      <RootStack onLayout={onLayoutRootView} />
+    </CredentialsContext.Provider>
   );
 }
 

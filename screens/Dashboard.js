@@ -1,10 +1,8 @@
-import { Text, View } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../components/colors";
 import MainContainer from "../components/Containers/MainContainer";
 import { ScreenHeight } from "../components/shared";
-import Entypo from '@expo/vector-icons/Entypo';
-import BigText from "../components/BigText";
+import BigText from "../components/Texts/BigText";
 const { primary, darkGray, success } = colors;
 
 const TopBg = styled.View`
@@ -15,14 +13,19 @@ const TopBg = styled.View`
     position: absolute;
     top: -30px;
 `
+const InnerContainer = styled.View`
+  flex: 1;
+  width: 100%;
+  align-items: center;
+`;
 const Dashboard = () => {
     return (
-        <MainContainer style={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0 }}>
+        <MainContainer style={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0 }} >
             <TopBg />
             <MainContainer style={{ backgroundColor: "transparent" }}>
                 <BigText style={{ marginBottom: 25, fontWeight: "bold" }}>
                     Hello World
-                </BigText>                
+                </BigText>
             </MainContainer>
         </MainContainer>
     )
