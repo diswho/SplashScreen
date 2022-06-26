@@ -6,3 +6,4 @@ expo install expo-splash-screen
 expo install @expo/vector-icons
 
 expo install styled-components
+expo install @react-native-async-storage/async-storage

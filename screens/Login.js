@@ -1,96 +1,191 @@
+import { Ionicons, Octicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 import { colors } from "../components/colors";
-import KeyboardAvoidingContainer from "../components/Containers/KeyboardAvoidingContainer";
-import MainContainer from "../components/Containers/MainContainer";
-import StyledTextInput from "../components/Inputs/StyledTextInput";
-import RegularText from "../components/Texts/RegularText";
-import MsgBox from "../components/Texts/MsgBox";
-import RegularButton from "../components/Buttons/RegularButton";
-import RowContainer from "../components/Containers/RowContainer";
-import PressableText from "../components/Texts/PressableText";
-const { primary } = colors;
+import KeyboardAvoidingWrapper from "../components/Containers/KeyboardAvoidingWrapper";
+import { CredentialsContext } from "../components/CredentialsContext";
+import {
+  InnerContainer,
+  PageLogo,
+  StyledContainer,
+  PageTitle,
+  SubTitle,
+  StyledFormArea,
+  LeftIcon,
+  StyledInputLabel,
+  StyledTextInput,
+  RightIcon,
+  MsgBox,
+  StyledButton,
+  ButtonText,
+  Line,
+  ExtraView,
+  TextLink,
+  TextLinkContent,
+  ExtraText,
+} from "../components/styles";
 
-const Login = () => {
-    const [message, setMessage] = useState("");
-    const [isSuccessMessage, setIsSuccessMessage] = useState("");
+const { primary, darkLight, brand } = colors;
 
-    const handleLogin = async (credentials, setSubmitting) => {
-        try {
-            setMessage(null);
-            setSubmitting(false);
-        } catch (error) {
-            setMessage("Login failed: " + error.message);
-            setSubmitting(false);
+const Login = ({ navigation }) => {
+  const [hidePassword, setHidePassword] = useState(true);
+  const [message, setMessage] = useState();
+  const [messageType, setMessageType] = useState();
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
+
+  const handleMessage = (message, type = "FAILED") => {
+    setMessage(message);
+    setMessageType(type);
+  };
+
+  const handleLogin = (credentials, setSubmitting) => {
+    handleMessage(null);
+    const url = "http://115.84.121.41:6768/user/signin/";
+    axios
+      .post(url, credentials)
+      .then((response) => {
+        const result = response.data;
+        const { status, message, data } = result;
+        if (status !== "SUCCESS") {
+          handleMessage(message, status);
+        } else {
+          persistLogin({ ...data[0] }, message, status);
         }
-    };
+        setSubmitting(false);
+      })
+      .catch((error) => {
+        setSubmitting(false);
+        console.error(error);
+        handleMessage(error.response.data.message);
+      });
+  };
 
-    return (
-        <MainContainer>
-            <KeyboardAvoidingContainer>
-                <RegularText style={{ marginBottom: 25 }}>
-                    Enter your account credentials
-                </RegularText>
-                <Formik
-                    initialValues={{ email: "", password: "" }}
-                    onSubmit={(values, { setSubmitting }) => {
-                        if (values.email == "" || values.password == "") {
-                            setMessage("Please fill in all fields");
-                            setSubmitting(false);
-                        } else {
-                            handleLogin(values, setSubmitting);
-                        }
-                    }}
-                >
-                    {({ handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        values,
-                        isSubmitting, }) => (
-                        <>
-                            <StyledTextInput label="Email Address"
-                                icon="email-variant"
-                                placeholder="yourmail@gmail.com"
-                                keyboardType="email-address"
-                                onChangeText={handleChange("email")}
-                                onBlur={handleBlur("email")}
-                                value={values.email}
-                                isPassword={false}
-                                style={{ marginBottom: 25 }} />
-                            <StyledTextInput
-                                label="Password"
-                                icon="lock-open"
-                                placeholder="* * * * * * * * *"
-                                onChangeText={handleChange("password")}
-                                onBlur={handleBlur("password")}
-                                value={values.password}
-                                isPassword={true}
-                                style={{ marginBottom: 25 }}
-                            />
-                            <MsgBox style={{ marginBottom: 25 }} success={isSuccessMessage}>
-                                {message || " "}
-                            </MsgBox>
-                            {!isSubmitting && (
-                                <RegularButton onPress={handleSubmit}>Login</RegularButton>
-                            )}
-                            {isSubmitting && (
-                                <RegularButton>
-                                    <ActivityIndicator size="small" color={primary} />
-                                </RegularButton>
-                            )}
-                            <RowContainer>
-                                <PressableText onPress={() => { }}>
-                                    New account sign up
-                                </PressableText>
-                                <PressableText onPress={() => { }}>
-                                    Forgot password
-                                </PressableText>
-                            </RowContainer>
-                        </>
-                    )}
-                </Formik>
-            </KeyboardAvoidingContainer>
-        </MainContainer>
+  const persistLogin = (credentials, message, status) => {
+    AsyncStorage.setItem(
+      "humanResourceCredentials",
+      JSON.stringify(credentials)
     )
-}
+      .then((response) => {
+        handleMessage(message, status);
+        setStoredCredentials(credentials);
+      })
+      .catch((error) => {
+        console.error(error);
+        handleMessage("An error occurred while Persisting Login failed");
+      });
+  };
+
+  return (
+    <KeyboardAvoidingWrapper>
+      <StyledContainer>
+        <StatusBar style="dark" />
+        <InnerContainer>
+          <PageLogo source={require("../assets/img/4565.jpg")} />
+          <PageTitle>My Page</PageTitle>
+          <SubTitle>Account Login</SubTitle>
+
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            onSubmit={(values, { setSubmitting }) => {
+              if (values.email == "" || values.password == "") {
+                handleMessage("Please fill all the fiedld");
+                setSubmitting(false);
+              } else {
+                handleLogin(values, setSubmitting);
+              }
+            }}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              isSubmitting,
+            }) => (
+              <StyledFormArea>
+                <MyTextInput
+                  label="Email Address"
+                  icon="mail"
+                  placeholder="your_email@address.dot"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+                <MyTextInput
+                  label="Password"
+                  icon="lock"
+                  placeholder="* * * * * * * * * * * * "
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                  secureTextEntry={hidePassword}
+                  isPassword={true}
+                  hidePassword={hidePassword}
+                  setHidePassword={setHidePassword}
+                  autoCapitalize="none"
+                />
+                <MsgBox type={messageType}>{message}</MsgBox>
+                {!isSubmitting && (
+                  <StyledButton onPress={handleSubmit}>
+                    <ButtonText>Login</ButtonText>
+                  </StyledButton>
+                )}
+                {isSubmitting && (
+                  <StyledButton disabled={true}>
+                    <ActivityIndicator size="large" color={primary} />
+                  </StyledButton>
+                )}
+
+                <Line />
+
+                <ExtraView>
+                  <ExtraText>Don't have an Account already? </ExtraText>
+                  <TextLink onPress={() => navigation.navigate("Signup")}>
+                    <TextLinkContent>Sign Up</TextLinkContent>
+                  </TextLink>
+                </ExtraView>
+              </StyledFormArea>
+            )}
+          </Formik>
+        </InnerContainer>
+      </StyledContainer>
+    </KeyboardAvoidingWrapper>
+  );
+};
+
+const MyTextInput = ({
+  label,
+  icon,
+  isPassword,
+  hidePassword,
+  setHidePassword,
+  ...props
+}) => {
+  return (
+    <View>
+      <LeftIcon>
+        <Octicons name={icon} size={30} color={brand} />
+      </LeftIcon>
+      <StyledInputLabel>{label}</StyledInputLabel>
+      <StyledTextInput {...props} />
+      {isPassword && (
+        <RightIcon onPress={() => setHidePassword(!hidePassword)}>
+          <Ionicons
+            name={hidePassword ? "md-eye-off" : "md-eye"}
+            size={30}
+            color={hidePassword ? darkLight : brand}
+          />
+        </RightIcon>
+      )}
+    </View>
+  );
+};
+
 export default Login;

@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import KeyboardAvoidingContainer from "../components/Containers/KeyboardAvoidingContainer";
+import KeyboardAvoidingWrapper from "../components/Containers/KeyboardAvoidingWrapper";
 import MainContainer from "../components/Containers/MainContainer";
 import StyledTextInput from "../components/Inputs/StyledTextInput";
 import RegularText from "../components/Texts/RegularText";
@@ -90,87 +90,88 @@ const ResetPassword = () => {
     };
 
     return (
-        <MainContainer>
-            <KeyboardAvoidingContainer>
-                <RegularText style={{ marginBottom: 25, textAlign: "center" }}>
-                    Enter the 4-digit code sent to your email address
-                </RegularText>
-                <StyledCodeInput
-                    code={code}
-                    setCode={setCode}
-                    maxLength={MAX_CODE_LENGTH}
-                    setPinReady={setPinReady}
-                />
-                <ResendTimer
-                    activeResend={activeResend}
-                    setActiveResend={setActiveResend}
-                    resendStatus={resendStatus}
-                    resendingEmail={resendingEmail}
-                    resendEmail={resendEmail}
-                    style={{ marginBottom: 25 }}
-                />
-                <Formik
-                    initialValues={{ newPassword: "", confirmNewPassword: "" }}
-                    onSubmit={(values, { setSubmitting }) => {
-                        if (values.newPassword == "" || values.confirmNewPassword == "") {
-                            setMessage("Please fill in all fields");
-                            setSubmitting(false);
-                        } else if (values.newPassword !== values.confirmNewPassword) {
-                            setMessage("Passwords do not match");
-                            setSubmitting(false);
-                        } else {
-                            handleOnSubmit(values, setSubmitting);
-                        }
-                    }}
-                >
-                    {({
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        values,
-                        isSubmitting,
-                    }) => (
-                        <FormWrapper pinReady={pinReady}>
-                            <StyledTextInput
-                                label="New Password"
-                                icon="lock-open-variant"
-                                placeholder="* * * * * * * * *"
-                                onChangeText={handleChange("newPassword")}
-                                onBlur={handleBlur("newPassword")}
-                                value={values.newPassword}
-                                isPassword={true}
-                                style={{ marginBottom: 25 }}
-                                editable={pinReady}
-                            />
-                            <StyledTextInput
-                                label="Confirm New Password"
-                                icon="lock-open-variant"
-                                placeholder="* * * * * * * * *"
-                                onChangeText={handleChange("confirmNewPassword")}
-                                onBlur={handleBlur("confirmNewPassword")}
-                                value={values.confirmNewPassword}
-                                isPassword={true}
-                                style={{ marginBottom: 25 }}
-                                editable={pinReady}
-                            />
-                            <MsgBox style={{ marginBottom: 25 }} success={isSuccessMessage}>
-                                {message || " "}
-                            </MsgBox>
-                            {!isSubmitting && (
-                                <RegularButton disabled={!pinReady} onPress={handleSubmit}>Submit</RegularButton>
-                            )}
-                            {isSubmitting && (
-                                <RegularButton>
-                                    <ActivityIndicator size="small" color={primary} />
-                                </RegularButton>
-                            )}
-                        </FormWrapper>
-                    )}
-                </Formik>
-                <MessageModal modalVisible={modalVisible} buttonHandler={buttonHandler} type={modalMessageType} headerText={headerText}
-                    message={modalMessage} buttonText={buttonText} />
-            </KeyboardAvoidingContainer>
-        </MainContainer>
+        <></>
+        // <MainContainer>
+        //     <KeyboardAvoidingContainer>
+        //         <RegularText style={{ marginBottom: 25, textAlign: "center" }}>
+        //             Enter the 4-digit code sent to your email address
+        //         </RegularText>
+        //         <StyledCodeInput
+        //             code={code}
+        //             setCode={setCode}
+        //             maxLength={MAX_CODE_LENGTH}
+        //             setPinReady={setPinReady}
+        //         />
+        //         <ResendTimer
+        //             activeResend={activeResend}
+        //             setActiveResend={setActiveResend}
+        //             resendStatus={resendStatus}
+        //             resendingEmail={resendingEmail}
+        //             resendEmail={resendEmail}
+        //             style={{ marginBottom: 25 }}
+        //         />
+        //         <Formik
+        //             initialValues={{ newPassword: "", confirmNewPassword: "" }}
+        //             onSubmit={(values, { setSubmitting }) => {
+        //                 if (values.newPassword == "" || values.confirmNewPassword == "") {
+        //                     setMessage("Please fill in all fields");
+        //                     setSubmitting(false);
+        //                 } else if (values.newPassword !== values.confirmNewPassword) {
+        //                     setMessage("Passwords do not match");
+        //                     setSubmitting(false);
+        //                 } else {
+        //                     handleOnSubmit(values, setSubmitting);
+        //                 }
+        //             }}
+        //         >
+        //             {({
+        //                 handleChange,
+        //                 handleBlur,
+        //                 handleSubmit,
+        //                 values,
+        //                 isSubmitting,
+        //             }) => (
+        //                 <FormWrapper pinReady={pinReady}>
+        //                     <StyledTextInput
+        //                         label="New Password"
+        //                         icon="lock-open-variant"
+        //                         placeholder="* * * * * * * * *"
+        //                         onChangeText={handleChange("newPassword")}
+        //                         onBlur={handleBlur("newPassword")}
+        //                         value={values.newPassword}
+        //                         isPassword={true}
+        //                         style={{ marginBottom: 25 }}
+        //                         editable={pinReady}
+        //                     />
+        //                     <StyledTextInput
+        //                         label="Confirm New Password"
+        //                         icon="lock-open-variant"
+        //                         placeholder="* * * * * * * * *"
+        //                         onChangeText={handleChange("confirmNewPassword")}
+        //                         onBlur={handleBlur("confirmNewPassword")}
+        //                         value={values.confirmNewPassword}
+        //                         isPassword={true}
+        //                         style={{ marginBottom: 25 }}
+        //                         editable={pinReady}
+        //                     />
+        //                     <MsgBox style={{ marginBottom: 25 }} success={isSuccessMessage}>
+        //                         {message || " "}
+        //                     </MsgBox>
+        //                     {!isSubmitting && (
+        //                         <RegularButton disabled={!pinReady} onPress={handleSubmit}>Submit</RegularButton>
+        //                     )}
+        //                     {isSubmitting && (
+        //                         <RegularButton>
+        //                             <ActivityIndicator size="small" color={primary} />
+        //                         </RegularButton>
+        //                     )}
+        //                 </FormWrapper>
+        //             )}
+        //         </Formik>
+        //         <MessageModal modalVisible={modalVisible} buttonHandler={buttonHandler} type={modalMessageType} headerText={headerText}
+        //             message={modalMessage} buttonText={buttonText} />
+        //     </KeyboardAvoidingContainer>
+        // </MainContainer>
     );
 };
 

@@ -1,4 +1,4 @@
-import KeyboardAvoidingContainer from "../components/Containers/KeyboardAvoidingContainer";
+import KeyboardAvoidingWrapper from "../components/Containers/KeyboardAvoidingWrapper";
 import MainContainer from "../components/Containers/MainContainer";
 import RegularText from "../components/Texts/RegularText";
 import { useState } from "react";
@@ -75,48 +75,49 @@ const EmailVerification = () => {
         }
     };
     return (
-        <MainContainer>
-            <KeyboardAvoidingContainer>
-                <IconHeader name="lock-open" style={{ marginBottom: 30 }} />
-                <RegularText style={{ textAlign: "center" }}>
-                    Enter the 4-digit code sent to your email address
-                </RegularText>
-                <StyledCodeInput
-                    code={code}
-                    setCode={setCode}
-                    maxLength={MAX_CODE_LENGTH}
-                    setPinReady={setPinReady}
-                />
-                {!verifying && pinReady && (
-                    <RegularButton onPress={handleEmailVerification}>
-                        Verify
-                    </RegularButton>
-                )}
-                {!verifying && !pinReady && (
-                    <RegularButton
-                        disabled={true}
-                        style={{ backgroundColor: secondary }}
-                        textStyle={{ color: lightGray }}
-                    >
-                        Verify
-                    </RegularButton>
-                )}
-                {verifying && (
-                    <RegularButton disabled={true}>
-                        <ActivityIndicator size="small" color={primary} />
-                    </RegularButton>
-                )}
-                <ResendTimer
-                    activeResend={activeResend}
-                    setActiveResend={setActiveResend}
-                    resendStatus={resendStatus}
-                    resendingEmail={resendingEmail}
-                    resendEmail={resendEmail}
-                />
-                <MessageModal modalVisible={modalVisible} buttonHandler={buttonHandler} type={modalMessageType} headerText={headerText}
-                    message={modalMessage} buttonText={buttonText} />
-            </KeyboardAvoidingContainer>
-        </MainContainer>
+        <></>
+        // <MainContainer>
+        //     <KeyboardAvoidingContainer>
+        //         <IconHeader name="lock-open" style={{ marginBottom: 30 }} />
+        //         <RegularText style={{ textAlign: "center" }}>
+        //             Enter the 4-digit code sent to your email address
+        //         </RegularText>
+        //         <StyledCodeInput
+        //             code={code}
+        //             setCode={setCode}
+        //             maxLength={MAX_CODE_LENGTH}
+        //             setPinReady={setPinReady}
+        //         />
+        //         {!verifying && pinReady && (
+        //             <RegularButton onPress={handleEmailVerification}>
+        //                 Verify
+        //             </RegularButton>
+        //         )}
+        //         {!verifying && !pinReady && (
+        //             <RegularButton
+        //                 disabled={true}
+        //                 style={{ backgroundColor: secondary }}
+        //                 textStyle={{ color: lightGray }}
+        //             >
+        //                 Verify
+        //             </RegularButton>
+        //         )}
+        //         {verifying && (
+        //             <RegularButton disabled={true}>
+        //                 <ActivityIndicator size="small" color={primary} />
+        //             </RegularButton>
+        //         )}
+        //         <ResendTimer
+        //             activeResend={activeResend}
+        //             setActiveResend={setActiveResend}
+        //             resendStatus={resendStatus}
+        //             resendingEmail={resendingEmail}
+        //             resendEmail={resendEmail}
+        //         />
+        //         <MessageModal modalVisible={modalVisible} buttonHandler={buttonHandler} type={modalMessageType} headerText={headerText}
+        //             message={modalMessage} buttonText={buttonText} />
+        //     </KeyboardAvoidingContainer>
+        // </MainContainer>
     )
 }
 
