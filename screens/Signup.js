@@ -56,8 +56,8 @@ const Signup = ({ navigation }) => {
   };
 
   const persistSignUp = async (credentials, message, status) => {
-    console.log(`=====TemporaryUserPersist: ${credentials}`);
-    console.log(`=====TemporaryUserPersist: ${JSON.stringify(credentials)}`);
+    // console.log(`=====TemporaryUserPersist: ${credentials}`);
+    // console.log(`=====TemporaryUserPersist: ${JSON.stringify(credentials)}`);
     try {
       await AsyncStorage.setItem(
         "humanResourceCredentials",
@@ -68,7 +68,7 @@ const Signup = ({ navigation }) => {
           setStoredCredentials(credentials);
         })
         .catch((error) => {
-          console.error(`=====persistSignUp ${error}`);
+          // console.error(`=====persistSignUp ${error}`);
           handleMessage("An error occurred while Persisting Login failed");
         });
     } catch (error) {
@@ -79,14 +79,14 @@ const Signup = ({ navigation }) => {
   const handleSignUp = async (credentials, setSubmitting) => {
     handleMessage(null);
     const url = `${baseAPIUrl}/user/signup/`;
-    console.log(`====== credentials: ${JSON.stringify(credentials)}`);
+    // console.log(`====== credentials: ${JSON.stringify(credentials)}`);
     axios
       .post(url, credentials)
       .then((response) => {
         const result = response.data;
         const { status, message, data } = result;
-        console.log(`===result ${JSON.stringify(result)}`);
-        console.log(`===result:data: ${JSON.stringify(data)}`);
+        // console.log(`===result ${JSON.stringify(result)}`);
+        // console.log(`===result:data: ${JSON.stringify(data)}`);
         if (status !== "PENDING") {
           // console.log(`==== !==PENDING: ${status}`);
           handleMessage(message, status);

@@ -1,3 +1,4 @@
+=================== -- EXPO - ===================
 expo init SplashScreen
 
 npm install -g expo-cli
@@ -7,3 +8,9 @@ expo install @expo/vector-icons
 
 expo install styled-components
 expo install @react-native-async-storage/async-storage
+
+=================== -- GIT -- ===================
+git add * 
+git stash
+git pull
+===================

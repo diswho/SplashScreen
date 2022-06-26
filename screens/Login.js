@@ -151,6 +151,12 @@ const Login = ({ navigation }) => {
                     <TextLinkContent>Sign Up</TextLinkContent>
                   </TextLink>
                 </ExtraView>
+                <ExtraView>
+                  <ExtraText>Forgot Password? </ExtraText>
+                  <TextLink onPress={() => navigation.navigate("ForgotPassword")}>
+                    <TextLinkContent>Reset Password</TextLinkContent>
+                  </TextLink>
+                </ExtraView>
               </StyledFormArea>
             )}
           </Formik>
