@@ -36,8 +36,7 @@ const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [message, setMessage] = useState();
   const [messageType, setMessageType] = useState();
-  const { storedCredentials, setStoredCredentials } =
-    useContext(CredentialsContext);
+  const { storedCredentials, setStoredCredentials } =   useContext(CredentialsContext);
 
   const handleMessage = (message, type = "FAILED") => {
     setMessage(message);
@@ -59,7 +58,16 @@ const Login = ({ navigation }) => {
         //   navigation.navigate("OTPVerification", { ...data })
         // } else 
         if (status !== "SUCCESS"){
-          handleMessage(message, status);
+          console.log(` ============== Login-status= ${result}` )
+          console.log(`==== result: ${JSON.stringify(result)}`)
+          if (status == "PENDING") {
+              // handleMessage(message, status);
+              // persistLogin({ ...data }, message, status);
+              navigation.navigate("OTPVerification", { ...data })
+            }else{
+              handleMessage(message, status);
+            }
+          
         }
         else {
           persistLogin({ ...data[0] }, message, status);

@@ -24,10 +24,13 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
 import { colors } from "../components/colors";
-import { TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { Ionicons, Octicons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import axios from "axios";
+import { baseAPIUrl } from "../components/shared";
 
-const { darkLight, brand } = colors;
+const { darkLight, brand ,primary} = colors;
 
 const Signup = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);

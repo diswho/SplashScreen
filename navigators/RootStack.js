@@ -1,9 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Dashboard from "../screens/Dashboard";
-import { colors } from "../components/colors";
-import Login from "../screens/Login";
 import { CredentialsContext } from "../components/CredentialsContext";
+import { colors } from "../components/colors";
+import Dashboard from "../screens/Dashboard";
+import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import OTPVerification from "../screens/OTPVerification";
 import ForgotPassword from "../screens/ForgotPassword";

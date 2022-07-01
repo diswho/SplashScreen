@@ -20,7 +20,7 @@ export default function App() {
         await AsyncStorage.getItem("humanResourceCredentials").then((result) => {
           if (result !== null) {
             setStoredCredentials(JSON.parse(result));
-            console.log("======== AsyncStorage.getItem NOT NULL")
+            // console.log("======== AsyncStorage.getItem NOT NULL")
           } else {
             setStoredCredentials("");
             // console.log("======== AsyncStorage.getItem IS NULL")

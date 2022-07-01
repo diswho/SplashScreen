@@ -19,11 +19,11 @@ const Dashboard = () => {
     };
 
     const clearLogin = async () => {
-        console.log(" ======== clearLogin ========")
+        // console.log(" ======== clearLogin ========")
         try {            
             await AsyncStorage.removeItem("humanResourceCredentials");
             setStoredCredentials("");            
-            console.log(`==== storedCredentials: ${JSON.stringify(storedCredentials)}`)
+            // console.log(`==== storedCredentials: ${JSON.stringify(storedCredentials)}`)
         } catch (error) {
             handleMessage("==== Log Out Error", error);
         }
