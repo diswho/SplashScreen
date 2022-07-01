@@ -5,9 +5,10 @@ npm install -g expo-cli
 
 expo install expo-splash-screen
 expo install @expo/vector-icons
-
+expo install axios
 expo install styled-components
 expo install @react-native-async-storage/async-storage
+expo install @react-native-community/datetimepicker
 
 =================== -- GIT -- ===================
 git add * 
