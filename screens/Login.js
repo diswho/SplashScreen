@@ -6,6 +6,7 @@ import { ActivityIndicator, View } from "react-native";
 import { colors } from "../components/colors";
 import KeyboardAvoidingWrapper from "../components/Containers/KeyboardAvoidingWrapper";
 import { CredentialsContext } from "../components/CredentialsContext";
+import { baseAPIUrl } from "../components/shared";
 import {
   InnerContainer,
   PageLogo,
@@ -26,6 +27,8 @@ import {
   TextLinkContent,
   ExtraText,
 } from "../components/styles";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { primary, darkLight, brand } = colors;
 
@@ -43,15 +46,22 @@ const Login = ({ navigation }) => {
 
   const handleLogin = (credentials, setSubmitting) => {
     handleMessage(null);
-    const url = "http://115.84.121.41:6768/user/signin/";
+    const url = `${baseAPIUrl}/user/signin/`;
+    // const url = "http://115.84.121.41:6768/user/signin/";
     axios
       .post(url, credentials)
       .then((response) => {
         const result = response.data;
         const { status, message, data } = result;
-        if (status !== "SUCCESS") {
+        // if (status == "PENDING") {
+        //   handleMessage(message, status);
+        //   persistLogin({ ...data }, message, status);
+        //   navigation.navigate("OTPVerification", { ...data })
+        // } else 
+        if (status !== "SUCCESS"){
           handleMessage(message, status);
-        } else {
+        }
+        else {
           persistLogin({ ...data[0] }, message, status);
         }
         setSubmitting(false);

@@ -5,7 +5,7 @@ import { colors } from "../components/colors";
 import Login from "../screens/Login";
 import { CredentialsContext } from "../components/CredentialsContext";
 import Signup from "../screens/Signup";
-import EmailVerification from "../screens/EmailVerification";
+import OTPVerification from "../screens/OTPVerification";
 import ForgotPassword from "../screens/ForgotPassword";
 import ResetPassword from "../screens/ResetPassword";
 
@@ -30,12 +30,13 @@ const RootStack = (props) => {
                             },
                         }}
                         initialRouteName="Login">
-                        {storedCredentials ? (<Stack.Screen name="Dashboard" component={Dashboard} />) : (<>
-                            <Stack.Screen name="ResetPassword" component={ResetPassword} />
-                            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-                            <Stack.Screen name="EmailVerification" component={EmailVerification} />
-                            <Stack.Screen name="Signup" component={Signup} />
-                            <Stack.Screen name="Login" component={Login} />
+                        {storedCredentials ? (<Stack.Screen name="Dashboard" component={Dashboard} />) :
+                            (<>
+                                <Stack.Screen name="ResetPassword" component={ResetPassword} />
+                                <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                                <Stack.Screen name="OTPVerification" component={OTPVerification} />
+                                <Stack.Screen name="Signup" component={Signup} />
+                                <Stack.Screen name="Login" component={Login} />
                             </>)}
                     </Stack.Navigator>
                 </NavigationContainer>

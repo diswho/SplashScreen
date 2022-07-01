@@ -1,33 +1,51 @@
-import styled from "styled-components/native";
+import { StatusBar } from "expo-status-bar";
+import { useContext, useState } from "react";
 import { colors } from "../components/colors";
-import MainContainer from "../components/Containers/MainContainer";
-import { ScreenHeight } from "../components/shared";
-import BigText from "../components/Texts/BigText";
+import { CredentialsContext } from "../components/CredentialsContext";
+import { ButtonText, InnerContainer, PageTitle, StyledButton, StyledFormArea, WelcomeContainer, WelcomeImage } from "../components/styles";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const { primary, darkGray, success } = colors;
 
-const TopBg = styled.View`
-    background-color: ${darkGray};
-    width: 100%;
-    height: ${ScreenHeight * 0.3}px;
-    border-radius: 30px;
-    position: absolute;
-    top: -30px;
-`
-const InnerContainer = styled.View`
-  flex: 1;
-  width: 100%;
-  align-items: center;
-`;
 const Dashboard = () => {
+    const [message, setMessage] = useState();
+    const [messageType, setMessageType] = useState();
+    const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
+    // console.log(`==== storedCredentials: ${storedCredentials}`)
+    // console.log(`==== storedCredentials: ${JSON.stringify(storedCredentials)}`)
+    const handleMessage = (message, type = "FAILED") => {
+        setMessage(message);
+        setMessageType(type);
+    };
+
+    const clearLogin = async () => {
+        console.log(" ======== clearLogin ========")
+        try {            
+            await AsyncStorage.removeItem("humanResourceCredentials");
+            setStoredCredentials("");            
+            console.log(`==== storedCredentials: ${JSON.stringify(storedCredentials)}`)
+        } catch (error) {
+            handleMessage("==== Log Out Error", error);
+        }
+    }
     return (
-        <MainContainer style={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0 }} >
-            <TopBg />
-            <MainContainer style={{ backgroundColor: "transparent" }}>
-                <BigText style={{ marginBottom: 25, fontWeight: "bold" }}>
-                    Hello World
-                </BigText>
-            </MainContainer>
-        </MainContainer>
+        <>
+            <StatusBar style="light" />
+            <InnerContainer>
+                <WelcomeImage
+                    resizeMode="cover"
+                    source={require("../assets/img/HR_Logo.jpg")}
+                />
+                <WelcomeContainer>
+                    <PageTitle welcome={true}>Dashboard</PageTitle>
+                    <StyledFormArea>
+                        <StyledButton onPress={clearLogin}>
+                            <ButtonText>Logout</ButtonText>
+                        </StyledButton>
+                    </StyledFormArea>
+                </WelcomeContainer>
+            </InnerContainer>
+        </>
     )
 }
 export default Dashboard

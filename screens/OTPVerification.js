@@ -1,17 +1,8 @@
-import KeyboardAvoidingWrapper from "../components/Containers/KeyboardAvoidingWrapper";
-import MainContainer from "../components/Containers/MainContainer";
-import RegularText from "../components/Texts/RegularText";
 import { useState } from "react";
-import RegularButton from "../components/Buttons/RegularButton";
-import { ActivityIndicator } from "react-native";
 import { colors } from "../components/colors";
-import IconHeader from "../components/icons/IconHeader";
-import StyledCodeInput from "../components/Inputs/StyledCodeInput";
-import ResendTimer from "../components/Timers/ResendTimer";
-import MessageModal from "../components/Modals/MessageModals";
 const { primary, secondary, lightGray } = colors;
 
-const EmailVerification = () => {
+const OTPVerification = ({ route }) => {
     const MAX_CODE_LENGTH = 4;
     const [code, setCode] = useState("");
     const [pinReady, setPinReady] = useState(false);
@@ -121,4 +112,4 @@ const EmailVerification = () => {
     )
 }
 
-export default EmailVerification;
+export default OTPVerification;

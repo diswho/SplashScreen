@@ -56,8 +56,6 @@ const Signup = ({ navigation }) => {
   };
 
   const persistSignUp = async (credentials, message, status) => {
-    // console.log(`=====TemporaryUserPersist: ${credentials}`);
-    // console.log(`=====TemporaryUserPersist: ${JSON.stringify(credentials)}`);
     try {
       await AsyncStorage.setItem(
         "humanResourceCredentials",
@@ -68,7 +66,6 @@ const Signup = ({ navigation }) => {
           setStoredCredentials(credentials);
         })
         .catch((error) => {
-          // console.error(`=====persistSignUp ${error}`);
           handleMessage("An error occurred while Persisting Login failed");
         });
     } catch (error) {
@@ -79,31 +76,22 @@ const Signup = ({ navigation }) => {
   const handleSignUp = async (credentials, setSubmitting) => {
     handleMessage(null);
     const url = `${baseAPIUrl}/user/signup/`;
-    // console.log(`====== credentials: ${JSON.stringify(credentials)}`);
     axios
       .post(url, credentials)
       .then((response) => {
         const result = response.data;
         const { status, message, data } = result;
-        // console.log(`===result ${JSON.stringify(result)}`);
-        // console.log(`===result:data: ${JSON.stringify(data)}`);
         if (status !== "PENDING") {
-          // console.log(`==== !==PENDING: ${status}`);
           handleMessage(message, status);
         } else {
-          // console.log(`==== PENDING: ${status}`);
-          const { email, name, dateOfBirth } = credentials;
-          // TemporaryUserPersist({ email, name, dateOfBirth }, message, status);
+          // const { email, name, dateOfBirth } = credentials;
           persistSignUp({ ...data }, message, status);
-          // TemporaryUserPersist(({ email, name, dateOfBirth } = credentials));
-          navigation.navigate("Verification", { ...data });
-          // persistSignUp({ ...data }, message, status);
+          navigation.navigate("OTPVerification", { ...data });
         }
         setSubmitting(false);
       })
       .catch((error) => {
         setSubmitting(false);
-        // console.log(`=====handleSignUp: ${error.message}`);
         handleMessage(error.message);
       });
   };
