@@ -36,7 +36,8 @@ const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [message, setMessage] = useState();
   const [messageType, setMessageType] = useState();
-  const { storedCredentials, setStoredCredentials } =   useContext(CredentialsContext);
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
 
   const handleMessage = (message, type = "FAILED") => {
     setMessage(message);
@@ -52,24 +53,16 @@ const Login = ({ navigation }) => {
       .then((response) => {
         const result = response.data;
         const { status, message, data } = result;
-        // if (status == "PENDING") {
-        //   handleMessage(message, status);
-        //   persistLogin({ ...data }, message, status);
-        //   navigation.navigate("OTPVerification", { ...data })
-        // } else 
-        if (status !== "SUCCESS"){
-          console.log(` ============== Login-status= ${result}` )
-          console.log(`==== result: ${JSON.stringify(result)}`)
+        if (status !== "SUCCESS") {
+          console.log(`==== result: ${JSON.stringify(result)}`);
           if (status == "PENDING") {
-              // handleMessage(message, status);
-              // persistLogin({ ...data }, message, status);
-              navigation.navigate("OTPVerification", { ...data })
-            }else{
-              handleMessage(message, status);
-            }
-          
-        }
-        else {
+            // handleMessage(message, status);
+            // persistLogin({ ...data }, message, status);
+            navigation.navigate("OTPVerification", { ...data });
+          } else {
+            handleMessage(message, status);
+          }
+        } else {
           persistLogin({ ...data[0] }, message, status);
         }
         setSubmitting(false);
@@ -171,7 +164,9 @@ const Login = ({ navigation }) => {
                 </ExtraView>
                 <ExtraView>
                   <ExtraText>Forgot Password? </ExtraText>
-                  <TextLink onPress={() => navigation.navigate("ForgotPassword")}>
+                  <TextLink
+                    onPress={() => navigation.navigate("ForgotPassword")}
+                  >
                     <TextLinkContent>Reset Password</TextLinkContent>
                   </TextLink>
                 </ExtraView>
