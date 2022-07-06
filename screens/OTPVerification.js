@@ -39,7 +39,7 @@ const OTPVerification = ({ route }) => {
   const [activeResend, setActiveResend] = useState(false);
 
   const [resendingEmail, setResendingEmail] = useState(false);
-  const [resendStatus, setResendStatus] = useState("Resend!");
+  const [resendStatus, setResendStatus] = useState("Resend! ");
 
   let resendTimerInterval;
   const { email, _id } = route?.params;
@@ -49,8 +49,6 @@ const OTPVerification = ({ route }) => {
     setActiveResend(false);
     const finalTime = +new Date() + targetTimeInSeconds * 1000;
     resendTimerInterval = setInterval(() => caculateTimeLeft(finalTime), 1000);
-    console.log(`====finalTime: ${finalTime}`);
-    console.log(`====activeResend: ${activeResend}`);
   };
 
   const caculateTimeLeft = (finalTime) => {
@@ -62,8 +60,8 @@ const OTPVerification = ({ route }) => {
       setActiveResend(true);
       setTimeLeft(null);
     }
-    console.log(`====difference: ${Math.round(difference / 1000)}`);
-    console.log(`====activeResend: ${activeResend}`);
+    // console.log(`====difference: ${Math.round(difference / 1000)}`);
+    // console.log(`====activeResend: ${activeResend}`);
   };
 
   useEffect(() => {    
@@ -188,7 +186,7 @@ const OTPVerification = ({ route }) => {
           <Line />
           {verificationSuccessful}
           <ResendTimer
-            setActiveResend={activeResend}
+            activeResend={activeResend}
             resendEmail={resendEmail}
             resendingEmail={resendingEmail}
             resendStatus={resendStatus}

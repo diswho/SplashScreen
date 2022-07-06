@@ -1,6 +1,12 @@
 import { ActivityIndicator, View } from "react-native";
 import { colors } from "../colors";
-import { EmphasisText, InfoText, InlineGroup, TextLink, TextLinkContent } from "../styles";
+import {
+  EmphasisText,
+  InfoText,
+  InlineGroup,
+  TextLink,
+  TextLinkContent,
+} from "../styles";
 
 const { brand } = colors;
 const ResendTimer = ({
@@ -11,10 +17,13 @@ const ResendTimer = ({
   timeLeft,
   targetTime,
 }) => {
+  console.log(`====timeLeft: ${timeLeft}`);
+  console.log(`====activeResend: ${activeResend}`);
   return (
     <View>
       <InlineGroup>
         <InfoText>Didn't receive Email? </InfoText>
+
         {!resendingEmail && (
           <TextLink
             style={{ opacity: !activeResend && 0.5 }}
@@ -25,10 +34,11 @@ const ResendTimer = ({
               resendStatus={resendStatus}
               style={{ textDecorationLine: "underline" }}
             >
-              {` ${resendStatus} `}
+              {resendStatus}
             </TextLinkContent>
           </TextLink>
         )}
+
         {resendingEmail && (
           <TextLink disabled>
             <TextLinkContent>
@@ -36,6 +46,7 @@ const ResendTimer = ({
             </TextLinkContent>
           </TextLink>
         )}
+
         {!activeResend && (
           <InfoText>
             in

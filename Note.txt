@@ -1,3 +1,6 @@
+https://www.youtube.com/watch?v=cMv_arQWVBA&list=PLk8gdrb2DmCicLTZJWC2cCTFXloTBMBCt&index=7
+https://www.youtube.com/watch?v=trndOtpxC7I&t=751s
+
 =================== -- EXPO - ===================
 expo init SplashScreen
 
