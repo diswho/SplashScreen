@@ -187,18 +187,18 @@ const OTPVerification = ({ route }) => {
           {verificationSuccessful}
           <ResendTimer
             activeResend={activeResend}
-            resendEmail={resendEmail}
             resendingEmail={resendingEmail}
             resendStatus={resendStatus}
             timeLeft={timeLeft}
             targetTime={targetTime}
+            resendEmail={resendEmail}                      
           />
         </BottomHalf>
         <VerificationModal
           successful={verificationSuccessful}
           setModalVisible={setModalVisible}
-          modalVisible={modalVisible}
           requestMessage={requestMessage}
+          modalVisible={modalVisible}          
           persistLoginAfterOTPVerification={persistLoginAfterOTPVerification}
         />
       </StyledContainer>
