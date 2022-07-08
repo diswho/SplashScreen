@@ -17,8 +17,8 @@ const ResendTimer = ({
   timeLeft,
   targetTime,
 }) => {
-  console.log(`====timeLeft: ${timeLeft}`);
-  console.log(`====activeResend: ${activeResend}`);
+  // console.log(`====timeLeft: ${timeLeft}`);
+  // console.log(`====activeResend: ${activeResend}`);
   return (
     <View>
       <InlineGroup>

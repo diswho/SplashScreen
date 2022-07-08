@@ -58,7 +58,7 @@ const Login = ({ navigation }) => {
           if (status == "PENDING") {
             // handleMessage(message, status);
             // persistLogin({ ...data }, message, status);
-            navigation.navigate("OTPVerification", { ...data });
+            navigation.navigate("OTPVerification", { ...data[0] });
           } else {
             handleMessage(message, status);
           }

@@ -61,7 +61,7 @@ const OTPVerification = ({ route }) => {
       setTimeLeft(null);
     }
     // console.log(`====difference: ${Math.round(difference / 1000)}`);
-    // console.log(`====activeResend: ${activeResend}`);
+    // console.log(`====_id: ${_id}`);
   };
 
   useEffect(() => {    
